@@ -146,3 +146,39 @@ cs133 = Module' {
     code = "133",
     cats = 15
 }
+
+-- since record syntax IS just syntactic sugar, we can use the constructor in the less ergonomic way as well
+
+cs118 :: Module' 
+cs118 = Module' "118" [1] 15 "CS" -- this DOES need to be in order though 
+
+getFullModuleCode :: Module' -> String 
+getFullModuleCode (Module' code _ _ dept) = dept ++ code -- can use less ergonomic way to access fields 
+
+-- let's use accessors though; we get these accessors for Module' : 
+
+{-
+    code :: Module' -> String 
+    year :: Module' -> [Int]
+    cats :: Module' -> Int 
+    department :: Module' -> String
+-}
+
+-- WARNING: field names can clash as accessor functions are placed in the same scope as its ADT 
+-- ADTs can't be declared inside a where binding 
+-- common solution is variable naming convention: put name of thing as a prefix e.g. 
+
+data Animal = Dog {
+    animalName :: String, 
+    animalAge :: Int
+} | Cat {
+    animalName :: String, 
+    animalAge :: Int
+} deriving Show
+
+data Person = Person {
+    personName :: String, -- if we put this as animalName then it would be a multiple declarations error!! 
+    personAge :: Int 
+}
+
+-- Updating data 
